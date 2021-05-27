@@ -9,25 +9,26 @@ services:
             - promtail-loki
 
     promtail:
+        build: ./promtail
+        restart: always
         depends_on:
-            - loki
-        image: grafana/promtail:master
+            - octoprint
         volumes:
-            - /var/log:/var/log
-        command: -config.file=/etc/promtail/docker-config.yaml
-        networks:
-            - promtail-loki
+            - octoprint-logs:/octoprint-logs
+        command: -config.file=/etc/promtail/promtail.yml -log.level=debug -config.expand-env=true
+        labels:
+            io.balena.features.journal-logs: '1'
 
-    cadvisor:
-        image: google/cadvisor:v0.33.0
-        volumes:
-            - /:/rootfs:ro
-            - /var/run:/var/run:ro
-            - /sys:/sys:ro
-            - /var/lib/docker/:/var/lib/docker:ro
-            - /dev/disk/:/dev/disk:ro
-        networks:
-            - prometheus-cadvisor
+    # cadvisor:
+    #     image: google/cadvisor:v0.33.0
+    #     volumes:
+    #         - /:/rootfs:ro
+    #         - /var/run:/var/run:ro
+    #         - /sys:/sys:ro
+    #         - /var/lib/docker/:/var/lib/docker:ro
+    #         - /dev/disk/:/dev/disk:ro
+    #     networks:
+    #         - prometheus-cadvisor
 
     prometheus:
         image: prom/prometheus:v2.7.1
@@ -61,7 +62,7 @@ services:
             - world
             - grafana-loki
             - grafana-prometheus
-            
+
     node_exporter:
         image: quay.io/prometheus/node-exporter:latest
         privileged: true
