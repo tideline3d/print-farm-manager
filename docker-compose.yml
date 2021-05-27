@@ -11,8 +11,6 @@ services:
     promtail:
         build: ./promtail
         restart: always
-        depends_on:
-            - octoprint
         volumes:
             - octoprint-logs:/octoprint-logs
         command: -config.file=/etc/promtail/promtail.yml -log.level=debug -config.expand-env=true
