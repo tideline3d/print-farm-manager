@@ -1,4 +1,4 @@
-version: "3"
+version: '2'
 
 services:
     loki:
@@ -61,6 +61,15 @@ services:
             - world
             - grafana-loki
             - grafana-prometheus
+            
+    node_exporter:
+        image: quay.io/prometheus/node-exporter:latest
+        privileged: true
+        restart: always
+        environment:
+            - 'SCRAPE_PORT=9100'
+        ports:
+            - 9100:9100
 
 networks:
     world:
