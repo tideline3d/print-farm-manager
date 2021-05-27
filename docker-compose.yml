@@ -32,8 +32,8 @@ services:
         image: prom/prometheus:v2.7.1
         ports:
             - "9090:9090"
-        volumes:
-            - ./prometheus:/app.cfg
+        # volumes:
+        #     - ./prometheus:/app.cfg
         networks:
             - world
             - prometheus-cadvisor
@@ -54,8 +54,8 @@ services:
             GF_SECURITY_ADMIN_USER: admin
             GF_SECURITY_ADMIN_PASSWORD: test
             GF_PATHS_PROVISIONING: '/app.cfg/provisioning'
-        volumes:
-            - ./grafana:/app.cfg
+        # volumes:
+        #     - ./grafana:/app.cfg
         networks:
             - world
             - grafana-loki
