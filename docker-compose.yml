@@ -1,10 +1,11 @@
 version: '2'
 
 networks:
-  loki:
+  backend:
 
 volumes:
   prometheus-data:
+  postgres-db:
 
 services:
   prometheus:
@@ -15,6 +16,8 @@ services:
 #      - ./prometheus:/etc/prometheus
       - prometheus-data:/prometheus
     command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - backend
 
   loki:
     image: grafana/loki:latest
@@ -22,7 +25,7 @@ services:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     networks:
-      - loki
+      - backend
 
   promtail:
     image: grafana/promtail:latest
@@ -30,11 +33,30 @@ services:
 #      - /var/log:/var/log
     command: -config.file=/etc/promtail/config.yml
     networks:
-      - loki
+      - backend
 
   grafana:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
     networks:
-      - loki
+      - backend
+  
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    networks:
+      - backend
+    # environment:  We'll put these in Balena Env Var instead
+    #  POSTGRES_PASSWORD: password
+    #  POSTGRES_USER: admin
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
