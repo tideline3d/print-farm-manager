@@ -6,8 +6,22 @@ networks:
 volumes:
   prometheus-data:
   postgres-db:
+  octofarm-logs:
+  octofarm-images:
+  octofarm-scripts:
 
 services:
+  octofarm:
+    image: octofarm/octofarm:1.1.13
+    ports:
+       - 80:80
+    networks:
+      - backend
+    volumes:
+      - octofarm-logs:/app/logs
+      - octofarm-scripts:/app/scripts
+      - octofarm-images:/app/images
+      
   prometheus:
     image: prom/prometheus:latest
     ports:
