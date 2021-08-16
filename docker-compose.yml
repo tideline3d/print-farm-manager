@@ -11,17 +11,6 @@ volumes:
   octofarm-scripts:
 
 services:
-  # octofarm:
-  #   image: octofarm/octofarm:1.1.13
-  #   ports:
-  #      - 80:80
-  #   networks:
-  #     - backend
-  #   volumes:
-  #     - octofarm-logs:/app/logs
-  #     - octofarm-scripts:/app/scripts
-  #     - octofarm-images:/app/images
-
   prometheus:
     image: prom/prometheus:latest
     ports:
@@ -56,21 +45,15 @@ services:
     networks:
       - backend
   
-  db:
-    image: postgres
-    restart: always
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres-db:/var/lib/postgresql/data
-    networks:
-      - backend
-    # environment:  We'll put these in Balena Env Var instead
-    #  POSTGRES_PASSWORD: password
-    #  POSTGRES_USER: admin
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres-db:/var/lib/postgresql/data
+  #   networks:
+  #     - backend
+  #   # environment:  We'll put these in Balena Env Var instead
+  #   #  POSTGRES_PASSWORD: password
+  #   #  POSTGRES_USER: admin
