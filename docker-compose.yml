@@ -1,28 +1,33 @@
-version: '2'
-
-networks:
-  backend:
-
-volumes:
-  prometheus-data:
-  postgres-db:
-  octofarm-logs:
-  octofarm-images:
-  octofarm-scripts:
-  loki-data:
-
+version: "2.0"
 services:
   prometheus:
-    image: prom/prometheus:latest
+    build: ./prometheus
     ports:
-      - 9000:9090
-    volumes:
-#      - ./prometheus:/etc/prometheus
-      - prometheus-data:/prometheus
-    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+      - "9090:9090"
+      - "9100:9100"
     networks:
+      - frontend
       - backend
-
+    depends_on: 
+      - node_exporter
+    container_name: prometheus
+  grafana:
+    build: ./grafana
+    ports: 
+      - "3000:3000"
+    networks:
+        - frontend
+        - backend
+    volumes:
+        - grafana_etc:/etc/grafana
+        - grafana_usr:/usr/share/grafana 
+        - grafana_var:/var/lib/grafana
+    container_name: grafana
+  node_exporter:
+    build: ./node_exporter
+    networks:
+        - backend
+    container_name: node_exporter
   loki:
     image: grafana/loki:latest
     ports:
@@ -33,30 +38,12 @@ services:
     volumes:
       - loki-data:/loki
 
-  promtail:
-    image: grafana/promtail:latest
-#    volumes:
-#      - /var/log:/var/log
-    command: -config.file=/etc/promtail/config.yml
-    networks:
-      - backend
+networks:
+    frontend:
+    backend:
 
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    networks:
-      - backend
-  
-  # db:
-  #   image: postgres
-  #   restart: always
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres-db:/var/lib/postgresql/data
-  #   networks:
-  #     - backend
-  #   # environment:  We'll put these in Balena Env Var instead
-  #   #  POSTGRES_PASSWORD: password
-  #   #  POSTGRES_USER: admin
+volumes:
+    grafana_etc:
+    grafana_usr:
+    grafana_var:
+    loki-data:
