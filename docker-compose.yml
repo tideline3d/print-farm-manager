@@ -9,6 +9,8 @@ volumes:
   octofarm-logs:
   octofarm-images:
   octofarm-scripts:
+  loki-active-index:
+  loki-cache:
 
 services:
   prometheus:
@@ -29,6 +31,9 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - backend
+    volumes:
+      - loki-active-index:/loki/boltdb-shipper-active
+      - loki-cache:/loki/boltdb-shipper-cache
 
   promtail:
     image: grafana/promtail:latest
