@@ -11,6 +11,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     mv prometheus-* prometheus && \
     rm prometheus.tar.gz
 
+RUN apt-get update && \
+    apt-get install -yq \
+      avahi-daemon avahi-utils libnss-mdns
+
+RUN systemctl enable avahi-daemon
+
 # Create a peristent volume and copy config file into it
 VOLUME /etc/prometheus
 COPY prometheus.yml /etc/prometheus/prometheus.yml 
