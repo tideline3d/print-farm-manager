@@ -1,4 +1,4 @@
-FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch
+FROM balenalib/%%BALENA_MACHINE_NAME%%-ubuntu:bionic
 
 # Set the correct architecture for your device
 ARG ARCH="armv7"
@@ -15,7 +15,7 @@ RUN apt-get update && \
     apt-get install -yq \
       avahi-daemon avahi-utils libnss-mdns
 
-#RUN systemctl enable avahi-daemon
+RUN systemctl enable avahi-daemon
 
 # Create a peristent volume and copy config file into it
 VOLUME /etc/prometheus
