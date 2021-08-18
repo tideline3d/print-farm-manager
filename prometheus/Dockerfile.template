@@ -15,7 +15,7 @@ RUN apt-get update && \
     apt-get install -yq \
       avahi-daemon avahi-utils libnss-mdns
 
-RUN sudo systemctl enable avahi-daemon
+#RUN sudo systemctl enable avahi-daemon
 
 # Create a peristent volume and copy config file into it
 VOLUME /etc/prometheus
