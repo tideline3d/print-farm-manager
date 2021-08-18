@@ -11,9 +11,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     mv prometheus-* prometheus && \
     rm prometheus.tar.gz
 
-RUN apt-get update && \
-    apt-get install -yq \
-      avahi-daemon avahi-utils libnss-mdns
+RUN install_packages dbus systemd avahi-daemon libnss-mdns
 
 #RUN sudo systemctl enable avahi-daemon
 
