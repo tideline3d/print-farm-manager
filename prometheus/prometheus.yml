@@ -20,5 +20,5 @@ scrape_configs:
     metrics_path: /metrics
     scheme: http
     static_configs:
-    - targets: ['node_exporter:9100','a1:9100']
+    - targets: ['node_exporter:9100','a1:9100','a2:9100','a3:9100','a4:9100','a5:9100','a6:9100','a7:9100','a8:9100','b1:9100','dev1:9100']
 
