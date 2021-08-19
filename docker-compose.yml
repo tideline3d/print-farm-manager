@@ -1,6 +1,7 @@
 version: "2.0"
 services:
   prometheus:
+    privileged: true
     build: ./prometheus
     ports:
       - "9090:9090"
