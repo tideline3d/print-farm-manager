@@ -6,28 +6,11 @@ ENV INITSYSTEM on
 
 # Install Prometheus
 RUN export DEBIAN_FRONTEND=noninteractive && \
-    install_packages apt-utils wget vim tar gzip dbus systemd && \
+    install_packages apt-utils wget vim tar gzip dbus && \
     wget -qO - https://github.com/prometheus/prometheus/releases/download/v2.15.2/prometheus-2.15.2.linux-${ARCH}.tar.gz > prometheus.tar.gz  && \
     tar zxf prometheus.tar.gz && \
     mv prometheus-* prometheus && \
     rm prometheus.tar.gz
-
-RUN apt-get update && \
-    apt-get install -yq \
-      avahi-daemon avahi-utils libnss-mdns
-
-# Mask services which do not make sense to run in a service container
-RUN systemctl mask \
-    dev-hugepages.mount \
-    sys-fs-fuse-connections.mount \
-    sys-kernel-config.mount \
-    display-manager.service \
-    getty@.service \
-    systemd-logind.service \
-    systemd-remount-fs.service \
-    getty.target \
-    graphical.target
-RUN systemctl enable avahi-daemon
 
 
 # Create a peristent volume and copy config file into it

@@ -1,7 +1,6 @@
 version: "2.0"
 services:
   prometheus:
-    privileged: true
     build: ./prometheus
     ports:
       - "9090:9090"
@@ -9,6 +8,8 @@ services:
     networks:
       - frontend
       - backend
+    volumes:
+      - prometheus-data:/etc/prometheus
     depends_on: 
       - node_exporter
     container_name: prometheus
@@ -48,3 +49,4 @@ volumes:
     grafana_usr:
     grafana_var:
     loki-data:
+    prometheus-data:
