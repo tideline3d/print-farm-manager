@@ -8,8 +8,8 @@ services:
     networks:
       - frontend
       - backend
-    #volumes:
-     # - prometheus-data:/etc/prometheus
+    volumes:
+      - prometheus-data:/prometheus
     depends_on: 
       - node_exporter
     container_name: prometheus
