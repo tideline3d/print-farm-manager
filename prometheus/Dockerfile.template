@@ -1,7 +1,8 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-ubuntu:bionic
 
 # Set the correct architecture for your device
-ARG ARCH="armv7"
+ARG ARCH="%%BALENA_ARCH%%"
+ENV INITSYSTEM on
 
 # Install Prometheus
 RUN export DEBIAN_FRONTEND=noninteractive && \
@@ -11,9 +12,11 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     mv prometheus-* prometheus && \
     rm prometheus.tar.gz
 
-RUN install_packages dbus systemd avahi-daemon libnss-mdns
+RUN apt-get update && \
+    apt-get install -yq \
+      avahi-daemon avahi-utils libnss-mdns
 
-#RUN sudo systemctl enable avahi-daemon
+RUN sudo systemctl enable avahi-daemon
 
 # Create a peristent volume and copy config file into it
 VOLUME /etc/prometheus
