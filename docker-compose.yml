@@ -9,7 +9,7 @@ services:
       - frontend
       - backend
     volumes:
-      - prometheus-data:/etc/prometheus
+     # - prometheus-data:/etc/prometheus
     depends_on: 
       - node_exporter
     container_name: prometheus
