@@ -1,7 +1,7 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-ubuntu:bionic
 
 # Set the correct architecture for your device
-ARG ARCH="%%BALENA_ARCH%%"
+ARG ARCH="armv7"
 ENV INITSYSTEM on
 
 # Install Prometheus
