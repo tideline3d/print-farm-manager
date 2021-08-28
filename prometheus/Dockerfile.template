@@ -17,6 +17,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 VOLUME /etc/prometheus
 COPY prometheus.yml /etc/prometheus/prometheus.yml 
 
+#Substitute env variables in config file before starting
+RUN envsubst < /etc/prometheus/prometheus.yml 
+
 # Start Prometheus
 COPY start.sh ./
 ENTRYPOINT [ "/bin/bash", "./start.sh" ]

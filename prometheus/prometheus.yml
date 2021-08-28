@@ -21,4 +21,11 @@ scrape_configs:
     scheme: http
     static_configs:
     - targets: ['node_exporter:9100','a1:9100','a2:9100','a3:9100','a4:9100','a5:9100','a6:9100','a7:9100','a8:9100','b1:9100','dev1:9100']
+  - job_name: 'octoprint'
+    scrape_interval: 5s
+    metrics_path: '/plugin/prometheus_exporter/metrics'
+    params:
+      apikey: ['$OCTOPRINT_API_KEY']
+    static_configs:
+    - targets: ['a1:80','a2:80','a3:80','a4:80','a5:80','a6:80','a7:80','a8:80','b1:80','dev1:80']
 
