@@ -51,11 +51,11 @@ services:
       - backend
     volumes:
       - loki-data:/loki
-  logstash:
-    image: grafana/logstash-output-loki
-    networks:
-      - backend
-      - frontend
+  # logstash:
+  #   image: grafana/logstash-output-loki
+  #   networks:
+  #     - backend
+  #     - frontend
 networks:
     frontend:
     backend:
