@@ -18,7 +18,7 @@ VOLUME /etc/prometheus
 COPY prometheus.yml /etc/prometheus/prometheus.yml 
 
 #Substitute env variables in config file before starting
-RUN envsubst < /etc/prometheus/prometheus.yml  > /etc/prometheus/prometheus.envsubst && mv /etc/prometheus/prometheus.envsubst /etc/prometheus/prometheus.yml 
+#RUN envsubst < /etc/prometheus/prometheus.yml  > /etc/prometheus/prometheus.envsubst && mv /etc/prometheus/prometheus.envsubst /etc/prometheus/prometheus.yml 
 
 # Start Prometheus
 COPY start.sh ./
