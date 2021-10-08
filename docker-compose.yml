@@ -1,36 +1,5 @@
 version: "2.0"
 services:
-  influxdb:
-    restart: always
-    networks:
-      - backend
-      - frontend
-    image: influxdb:1.8
-    ports:
-      - '8086:8086'
-    volumes:
-      - influxdb-storage:/var/lib/influxdb
-    environment:
-      - INFLUXDB_DB=${INFLUXDB_DB}
-      - INFLUXDB_HTTP_AUTH_ENABLED=${INFLUXDB_HTTP_AUTH_ENABLED}
-      - INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER}
-      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
-  chronograf:
-    image: chronograf:latest
-    restart: always
-    networks:
-      - backend
-      - frontend
-    ports:
-      - '8888:8888'
-    volumes:
-      - chronograf-storage:/var/lib/chronograf
-    depends_on:
-      - influxdb
-    environment:
-      - INFLUXDB_URL=http://influxdb:8086
-      - INFLUXDB_USERNAME=${INFLUXDB_ADMIN_USER}
-      - INFLUXDB_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
   prometheus:
     build: ./prometheus
     ports:
