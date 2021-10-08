@@ -38,8 +38,7 @@ services:
         - grafana_var:/var/lib/grafana
     container_name: grafana
     depends_on:
-      - influxdb
-      - prometheus
+    - prometheus
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
@@ -72,6 +71,4 @@ volumes:
     grafana_var:
     loki-data:
     prometheus-data:
-    influxdb-storage:
-    chronograf-storage:
 
