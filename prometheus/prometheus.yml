@@ -28,4 +28,8 @@ scrape_configs:
       apikey: ['$OCTOPRINT_API_KEY']
     static_configs:
     - targets: ['a1:80','a2:80','a3:80','a4:80','a5:80','a6:80','a7:80','a8:80','b1:80','dev1:80']
+  - job_name: 'unifipoller'
+    scrape_interval: 30s
+    static_configs:
+    - targets: ['unifi-poller:9130']
 
