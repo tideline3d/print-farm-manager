@@ -62,6 +62,16 @@ services:
     image: golift/unifi-poller:latest
     networks:
       - backend
+  db:
+    image: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+#    environment:
+#      - POSTGRES_DB=postgres
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+    networks:
+      - backend
 networks:
     frontend:
     backend:
@@ -71,4 +81,5 @@ volumes:
     grafana_var:
     loki-data:
     prometheus-data:
+    db-data:
 
